@@ -20,7 +20,11 @@ public class App
 		//Register class
 		Class.forName(params.getDriver());
 
-		Connection conn = DriverManager.getConnection(params.getUrl());
+		Properties p = new Properties();
+		for (Map.Entry<String,String> entry : params.getParams().entrySet()) {
+			p.put(entry.getKey(), entry.getValue());
+		}
+		Connection conn = DriverManager.getConnection(params.getUrl(), p);
 
 		try {
 			String content = params.getQuery();
