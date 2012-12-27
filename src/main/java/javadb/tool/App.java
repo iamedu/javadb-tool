@@ -25,15 +25,17 @@ public class App
 			p.put(entry.getKey(), entry.getValue());
 		}
 		Connection conn = DriverManager.getConnection(params.getUrl(), p);
+		Statement st = null;
 
 		try {
 			String content = params.getQuery();
 			if(content == null) {
 				content = new Scanner(System.in).useDelimiter("\\Z").next();
 			}
-			Statement st = conn.createStatement();
+			st = conn.createStatement();
 			st.execute(content);
 		} finally {
+			st.close();
 			conn.close();
 		}
 
